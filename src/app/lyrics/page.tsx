@@ -1,12 +1,7 @@
 import Link from 'next/link';
 
 export default function LyricsPage() {
-  const songs = [
-    { href: '/lyrics/song1', label: 'Song 1' },
-    { href: '/lyrics/song2', label: 'Song 2' },
-    { href: '/lyrics/song3', label: 'Song 3' },
-    // Add more songs here as needed
-  ];
+  const songs = [{ href: '/song', label: 'Alien Man' }];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-violet-600 via-indigo-900 to-gray-900 flex flex-col items-center justify-center">

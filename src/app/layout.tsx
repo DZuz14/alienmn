@@ -1,8 +1,9 @@
 'use client';
 import { Inter, Roboto_Mono } from 'next/font/google';
 import { usePathname } from 'next/navigation';
-import './globals.css';
+import GradientWrapper from '../components/GradientWrapper';
 import NavBar from '../components/NavBar';
+import './globals.css';
 
 const inter = Inter({
   variable: '--font-sans',
@@ -28,7 +29,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.variable} ${robotoMono.variable} antialiased`}>
         {!isHomePage && <NavBar />}
-        {children}
+        <GradientWrapper>{children}</GradientWrapper>
       </body>
     </html>
   );

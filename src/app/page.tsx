@@ -1,36 +1,31 @@
 /**
  * Home page
  */
+import StarryNightSky from '@/components/StarryNightSky';
+
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-violet-600 via-indigo-900 to-gray-900 flex flex-col items-center justify-center">
+    <StarryNightSky>
       <div className="flex flex-col items-center">
         <h1
-          className="text-[108px] font-extrabold  text-white mb-4"
+          className="text-4xl md:text-6xl lg:text-8xl font-extrabold text-white mb-4 md:mb-8 text-center px-4 tracking-tight"
           style={{ textShadow: '0 0 8px rgba(255, 255, 255, 0.7)' }}
         >
           alienmn
         </h1>
 
-        <ul className="flex flex-col gap-8 items-center">
+        <ul className="flex flex-col gap-4 md:gap-6 items-center">
           <li>
             <a
               href="/lyrics"
-              className="text-gray-300 font-semibold text-4xl hover:text-indigo-200 transition-colors duration-200 tracking-wide"
+              className="text-2xl md:text-3xl lg:text-4xl text-white font-semibold hover:text-white transition-colors duration-200 border-b-2 border-indigo-400 pb-1 "
+              style={{ textShadow: '0 0 4px rgba(255, 255, 255, 0.5)' }}
             >
               lyrics
             </a>
           </li>
-          <li>
-            <a
-              href="/lyrics"
-              className="text-gray-300 font-semibold text-4xl hover:text-indigo-200 transition-colors duration-200 tracking-wide"
-            >
-              contact{' '}
-            </a>
-          </li>
         </ul>
       </div>
-    </div>
+    </StarryNightSky>
   );
 }
