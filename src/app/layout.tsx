@@ -1,7 +1,7 @@
 'use client';
+import StarryNightSky from '@/components/StarryNightSky';
 import { Inter, Roboto_Mono } from 'next/font/google';
 import { usePathname } from 'next/navigation';
-import GradientWrapper from '../components/GradientWrapper';
 import NavBar from '../components/NavBar';
 import './globals.css';
 
@@ -29,7 +29,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.variable} ${robotoMono.variable} antialiased`}>
         {!isHomePage && <NavBar />}
-        <GradientWrapper>{children}</GradientWrapper>
+        <StarryNightSky>{children}</StarryNightSky>
       </body>
     </html>
   );

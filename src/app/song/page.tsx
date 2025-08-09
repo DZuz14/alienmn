@@ -71,10 +71,7 @@ export default function LyricsPage() {
   }, [activeAnnotation]);
 
   return (
-    <div
-      className="min-h-screen bg-gradient-to-br from-violet-600 via-indigo-900 to-gray-900 p-8"
-      ref={pageRef}
-    >
+    <>
       <SongHeader title={title} />
 
       <LyricsContainer
@@ -83,7 +80,7 @@ export default function LyricsPage() {
         activeAnnotation={activeAnnotation}
         setActiveAnnotation={setActiveAnnotation}
       />
-    </div>
+    </>
   );
 }
 
@@ -132,9 +129,9 @@ function LyricLine({
         });
         document.dispatchEvent(event);
       }}
-      className={`text-lg text-gray-700 ${
+      className={`text-lg text-white ${
         line.annotation
-          ? 'border-b border-dotted border-gray-400 cursor-pointer hover:text-gray-900 hover:border-gray-500 transition-colors duration-200 inline-block'
+          ? 'border-b border-dotted border-white cursor-pointer hover:text-white hover:border-white transition-colors duration-200 inline-block'
           : ''
       }`}
     >
@@ -198,11 +195,11 @@ function LyricsContainer({
   setActiveAnnotation: (annotation: Annotation | null) => void;
 }) {
   return (
-    <div className="bg-white/80 backdrop-blur-sm rounded-xl p-8 max-w-3xl mx-auto relative shadow-lg border border-white/20">
-      <p className="text-gray-500 italic text-base mb-6">
+    <div className="bg-white/20 backdrop-blur-sm rounded-xl p-8 max-w-3xl mx-auto relative shadow-lg border border-white/20">
+      <p className="text-white italic text-base mb-6">
         Dotted underlines indicate additional context.
       </p>
-      <div className="text-gray-800 space-y-2">
+      <div className="text-white space-y-2">
         {lyrics.map((line: Lyric, index: number) => (
           <LyricLine
             key={index}
