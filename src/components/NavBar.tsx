@@ -11,19 +11,19 @@ export default function NavBar() {
 
   return (
     <nav className="fixed top-0 right-0 pt-6 pr-10">
-      <ul className="flex gap-6 text-xl font-bold">
-        {links.map((link) => (
-          <li key={link.href}>
-            <Link
-              href={link.href}
-              className={`${
-                pathname === link.href ? 'text-white' : 'text-gray-300'
-              } font-semibold text-2xl hover:text-indigo-200 transition-colors duration-200 tracking-wide`}
-            >
-              {link.label}
-            </Link>
-          </li>
-        ))}
+      <ul className="flex gap-6 font-bold">
+        {links
+          .filter((link) => link.href !== pathname)
+          .map((link) => (
+            <li key={link.href}>
+              <Link
+                href={link.href}
+                className={`text-white text-2xl hover:text-white/70 font-bold border-b-2 border-indigo-500 pb-2`}
+              >
+                {link.label}
+              </Link>
+            </li>
+          ))}
       </ul>
     </nav>
   );

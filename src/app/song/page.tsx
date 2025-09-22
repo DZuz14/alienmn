@@ -71,16 +71,13 @@ export default function LyricsPage() {
   }, [activeAnnotation]);
 
   return (
-    <>
-      <SongHeader title={title} />
-
-      <LyricsContainer
-        lyrics={lyrics}
-        handleLyricClick={handleLyricClick}
-        activeAnnotation={activeAnnotation}
-        setActiveAnnotation={setActiveAnnotation}
-      />
-    </>
+    <LyricsContainer
+      lyrics={lyrics}
+      handleLyricClick={handleLyricClick}
+      activeAnnotation={activeAnnotation}
+      setActiveAnnotation={setActiveAnnotation}
+      title={title}
+    />
   );
 }
 
@@ -114,29 +111,35 @@ function LyricLine({
   ) => void;
 }) {
   const lineRef = useRef<HTMLParagraphElement>(null);
+  const [songParts, setSongParts] = useState<string[]>([
+    'Verse 1',
+    'Verse 2',
+    'Verse 3',
+    'Hook',
+  ]);
 
   return (
-    <p
+    <div
       ref={lineRef}
       onClick={(e) =>
         onAnnotationClick(line.annotation ? line.annotation : undefined, e)
       }
-      onMouseLeave={() => {
-        // This will help close the tooltip when mouse leaves the line
-        const event = new MouseEvent('mousedown', {
-          bubbles: true,
-          cancelable: true,
-        });
-        document.dispatchEvent(event);
-      }}
-      className={`text-lg text-white ${
+      className={`text-lg text-white tracking-wide pb-0.5 block ${
         line.annotation
-          ? 'border-b border-dotted border-white cursor-pointer hover:text-white hover:border-white transition-colors duration-200 inline-block'
+          ? 'cursor-pointer hover:text-white transition-colors duration-200'
           : ''
       }`}
     >
-      {line.text}
-    </p>
+      {songParts.includes(line.text) ? (
+        <div className="font-bold py-2.5 text-xl">{line.text}</div>
+      ) : line.annotation ? (
+        <span className="border-b border-dotted border-white hover:border-white transition-colors duration-200">
+          {line.text}
+        </span>
+      ) : (
+        line.text
+      )}
+    </div>
   );
 }
 
@@ -163,7 +166,7 @@ function AnnotationTooltip({
       }}
       onClick={(e) => {
         e.stopPropagation();
-        onClose();
+        // Don't close on click - let user click outside to close
       }}
     >
       {annotation.text}
@@ -185,6 +188,7 @@ function LyricsContainer({
   handleLyricClick,
   activeAnnotation,
   setActiveAnnotation,
+  title,
 }: {
   lyrics: Lyric[];
   handleLyricClick: (
@@ -193,21 +197,21 @@ function LyricsContainer({
   ) => void;
   activeAnnotation: Annotation | null;
   setActiveAnnotation: (annotation: Annotation | null) => void;
+  title: string;
 }) {
   return (
-    <div className="bg-white/20 backdrop-blur-sm rounded-xl p-8 max-w-3xl mx-auto relative shadow-lg border border-white/20">
-      <p className="text-white italic text-base mb-6">
+    <div className="bg-white/20 backdrop-blur-sm rounded-xl p-8 relative shadow-lg border border-white/20">
+      <h1 className="text-4xl font-bold text-white text-center">{title}</h1>
+      <p className="text-white italic text-base mb-6 text-center pt-2">
         Dotted underlines indicate additional context.
       </p>
-      <div className="text-white space-y-2">
-        {lyrics.map((line: Lyric, index: number) => (
-          <LyricLine
-            key={index}
-            line={line}
-            onAnnotationClick={handleLyricClick}
-          />
-        ))}
-      </div>
+      {lyrics.map((line: Lyric, index: number) => (
+        <LyricLine
+          key={index}
+          line={line}
+          onAnnotationClick={handleLyricClick}
+        />
+      ))}
 
       {activeAnnotation && (
         <AnnotationTooltip

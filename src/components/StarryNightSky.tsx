@@ -2,15 +2,6 @@
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-interface Star {
-  id: number;
-  size: number;
-  top: string;
-  left: string;
-  animationDelay: string;
-  animationDuration: string;
-}
-
 interface Bubble {
   id: number;
   size: number;
@@ -22,7 +13,7 @@ interface Bubble {
 }
 
 /**
- * Creates a starry night sky background with twinkling stars and floating bubbles
+ * Creates a starry night sky background with static stars and floating bubbles
  * @param children - The children to wrap
  * @returns The wrapped children with a starry night sky background
  */
@@ -51,37 +42,6 @@ export default function StarryNightSky({
     const x = Math.sin(seed) * 10000;
     return x - Math.floor(x);
   }, []);
-
-  // Generate random stars with consistent animation properties using seeded random
-  const generateStars = useCallback(
-    (width: number, height: number) => {
-      const starCount = Math.floor((width * height) / 7000) + 80;
-      const newStars: Star[] = [];
-
-      for (let i = 0; i < starCount; i++) {
-        // Use seeded random for consistent results
-        const sizeRandom = seededRandom(i * 1000);
-        const topRandom = seededRandom(i * 1001);
-        const leftRandom = seededRandom(i * 1002);
-        const durationRandom = seededRandom(i * 1003);
-
-        const animationDuration = `${(durationRandom * 3 + 4).toFixed(1)}s`;
-        const animationDelay = `${(seededRandom(i * 1004) * 20).toFixed(1)}s`;
-
-        newStars.push({
-          id: i,
-          size: sizeRandom * 2.5 + 1,
-          top: `${topRandom * 100}%`,
-          left: `${leftRandom * 100}%`,
-          animationDelay,
-          animationDuration,
-        });
-      }
-
-      return newStars;
-    },
-    [seededRandom]
-  );
 
   // Generate floating bubbles with consistent animation properties using seeded random
   const generateBubbles = useCallback(
@@ -116,15 +76,42 @@ export default function StarryNightSky({
     [seededRandom]
   );
 
-  // Memoize stars and bubbles based on dimensions
-  const stars = useMemo(
-    () => (isClient ? generateStars(dimensions.width, dimensions.height) : []),
-    [isClient, dimensions, generateStars]
-  );
-
   const bubbles = useMemo(
     () => (isClient ? generateBubbles(dimensions.width) : []),
     [isClient, dimensions.width, generateBubbles]
+  );
+
+  // Generate static stars with consistent positioning using seeded random
+  const generateStaticStars = useCallback(() => {
+    const starCount = 100;
+    const stars = [];
+
+    for (let i = 0; i < starCount; i++) {
+      const topRandom = seededRandom(i * 1000);
+      const leftRandom = seededRandom(i * 1001);
+      const sizeRandom = seededRandom(i * 1002);
+      const opacityRandom = seededRandom(i * 1003);
+
+      const size = sizeRandom < 0.5 ? 1 : 2;
+      const top = `${(topRandom * 90 + 5).toFixed(0)}%`;
+      const left = `${(leftRandom * 90 + 5).toFixed(0)}%`;
+      const opacity = Number((opacityRandom * 0.3 + 0.6).toFixed(2));
+
+      stars.push({
+        id: i,
+        size,
+        top,
+        left,
+        opacity,
+      });
+    }
+
+    return stars;
+  }, [seededRandom]);
+
+  const staticStars = useMemo(
+    () => (isClient ? generateStaticStars() : []),
+    [isClient, generateStaticStars]
   );
 
   // Handle resize with debounce to prevent excessive updates
@@ -151,38 +138,34 @@ export default function StarryNightSky({
   }, [isClient]);
 
   return (
-    <div className="bg-gradient-to-br from-violet-600 via-indigo-900 to-gray-900 min-h-screen w-full flex flex-col items-center justify-center relative overflow-hidden">
-      {/* Only render stars and bubbles on client */}
+    <div className="bg-gradient-to-br from-violet-600 via-indigo-900 to-gray-900 min-h-screen w-full p-20">
+      {/* Only render static stars on client */}
       {isClient && (
-        <>
-          {/* Stars */}
-          {stars.map((star) => (
+        <div className="absolute inset-0">
+          {staticStars.map((star) => (
             <div
               key={`star-${star.id}`}
-              className="absolute rounded-full bg-white opacity-80"
+              className={`absolute bg-white rounded-full ${
+                star.size === 1 ? 'w-0.5 h-0.5' : 'w-1 h-1'
+              }`}
               style={{
-                width: `${star.size}px`,
-                height: `${star.size}px`,
                 top: star.top,
                 left: star.left,
-                animationName: 'twinkle',
-                animationDuration: star.animationDuration,
-                animationTimingFunction: 'ease-in-out',
-                animationIterationCount: 'infinite',
-                animationDelay: star.animationDelay,
-                willChange: 'opacity',
+                opacity: star.opacity,
               }}
             />
           ))}
+        </div>
+      )}
 
-          {/* Floating Bubbles */}
+      {/* Only render bubbles on client */}
+      {isClient && (
+        <>
           {bubbles.map((bubble) => (
             <div
               key={`bubble-${bubble.id}`}
-              className="absolute rounded-full border-2 border-white"
+              className="absolute rounded-full border-2 border-white w-0.5 h-0.5"
               style={{
-                width: `${bubble.size}px`,
-                height: `${bubble.size}px`,
                 top: bubble.top,
                 left: bubble.left,
                 opacity: bubble.opacity,
