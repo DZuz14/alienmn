@@ -1,5 +1,7 @@
 'use client';
 import { Annotation, Lyric } from '@/app/types';
+import AnnotationTooltip from '@/components/AnnotationTooltip';
+import Container from '@/components/Container';
 import alienman from '@/songs/alienman.json';
 import type { MouseEvent } from 'react';
 import { useEffect, useRef, useState } from 'react';
@@ -73,26 +75,26 @@ export default function LyricsPage() {
   }, [activeAnnotation]);
 
   return (
-    <LyricsContainer
-      lyrics={lyrics}
-      handleLyricClick={handleLyricClick}
-      activeAnnotation={activeAnnotation}
-      setActiveAnnotation={setActiveAnnotation}
-      title={title}
-    />
-  );
-}
+    <Container>
+      <h1 className="text-center">{title}</h1>
+      <p className="italic mb-6 text-center pt-2">
+        Dotted underlines indicate additional context.
+      </p>
+      {lyrics.map((line: Lyric, index: number) => (
+        <LyricLine
+          key={index}
+          line={line}
+          onAnnotationClick={handleLyricClick}
+        />
+      ))}
 
-/**
- * Displays the song title header
- * @param {Object} props
- * @param {string} props.title - The title of the song
- */
-function SongHeader({ title }: { title: string }) {
-  return (
-    <h1 className="text-4xl font-bold text-white text-center mt-8 mb-8">
-      {title} Lyrics
-    </h1>
+      {activeAnnotation && (
+        <AnnotationTooltip
+          annotation={activeAnnotation}
+          onClose={() => setActiveAnnotation(null)}
+        />
+      )}
+    </Container>
   );
 }
 
@@ -140,86 +142,6 @@ function LyricLine({
         </span>
       ) : (
         line.text
-      )}
-    </div>
-  );
-}
-
-/**
- * Displays an annotation tooltip at the specified position
- * @param {Object} props
- * @param {Annotation} props.annotation - The annotation object with text and position
- * @param {Function} props.onClose - Handler for closing the annotation
- */
-function AnnotationTooltip({
-  annotation,
-  onClose,
-}: {
-  annotation: Annotation;
-  onClose: () => void;
-}) {
-  return (
-    <div
-      className="fixed bg-gray-800/90 backdrop-blur-sm text-white p-4 rounded-lg text-base max-w-sm shadow-lg transition-opacity duration-200 tooltip z-50"
-      style={{
-        top: annotation.position.top,
-        left: annotation.position.left,
-        transform: annotation.position.transform,
-      }}
-      onClick={(e) => {
-        e.stopPropagation();
-        // Don't close on click - let user click outside to close
-      }}
-    >
-      {annotation.text}
-      <div className="absolute left-1/2 bottom-0 w-2 h-2 bg-gray-800/90 transform rotate-45 translate-y-1/2 -translate-x-1/2"></div>
-    </div>
-  );
-}
-
-/**
- * Container component for displaying lyrics with annotations
- * @param {Object} props
- * @param {Array<Lyric>} props.lyrics - The lyrics data
- * @param {Function} props.handleLyricClick - Handler for when a lyric is clicked
- * @param {Annotation | null} props.activeAnnotation - Currently active annotation
- * @param {Function} props.setActiveAnnotation - Function to update the active annotation
- */
-function LyricsContainer({
-  lyrics,
-  handleLyricClick,
-  activeAnnotation,
-  setActiveAnnotation,
-  title,
-}: {
-  lyrics: Lyric[];
-  handleLyricClick: (
-    annotation: string | undefined,
-    event: MouseEvent<HTMLParagraphElement>
-  ) => void;
-  activeAnnotation: Annotation | null;
-  setActiveAnnotation: (annotation: Annotation | null) => void;
-  title: string;
-}) {
-  return (
-    <div className="bg-white/20 backdrop-blur-sm rounded-xl p-8 relative shadow-lg border border-white/20">
-      <h1 className="text-4xl font-bold text-white text-center">{title}</h1>
-      <p className="text-white italic text-base mb-6 text-center pt-2">
-        Dotted underlines indicate additional context.
-      </p>
-      {lyrics.map((line: Lyric, index: number) => (
-        <LyricLine
-          key={index}
-          line={line}
-          onAnnotationClick={handleLyricClick}
-        />
-      ))}
-
-      {activeAnnotation && (
-        <AnnotationTooltip
-          annotation={activeAnnotation}
-          onClose={() => setActiveAnnotation(null)}
-        />
       )}
     </div>
   );

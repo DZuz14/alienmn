@@ -30,26 +30,19 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+  letter-spacing: -0.025em;
 }
 @keyframes twinkle {
   0% {
-    opacity: 0.2;
+    opacity: 0.6;
     transform: scale(1);
-  }
-  25% {
-    opacity: 0.5;
-    transform: scale(1.1);
   }
   50% {
     opacity: 1;
-    transform: scale(1.2);
-  }
-  75% {
-    opacity: 0.5;
     transform: scale(1.1);
   }
   100% {
-    opacity: 0.2;
+    opacity: 0.6;
     transform: scale(1);
   }
 }
@@ -82,6 +75,61 @@ body {
 Custom CSS for the project
 */
 
+/* Global heading and paragraph styles */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: white;
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
+}
+
+p {
+  color: white;
+  margin: 0;
+}
+
+span {
+  color: white;
+}
+
+h1 {
+  font-size: 3rem; /* 48px */
+}
+
+h2 {
+  font-size: 2.5rem; /* 40px */
+}
+
+h3 {
+  font-size: 2rem; /* 32px */
+}
+
+h4 {
+  font-size: 1.5rem; /* 24px */
+}
+
+h5 {
+  font-size: 1.25rem; /* 20px */
+}
+
+h6 {
+  font-size: 1rem; /* 16px */
+}
+
+p {
+  font-size: 1rem; /* 16px */
+  line-height: 1.6;
+}
+
 .glowing-text {
-  text-shadow: 0 0 12px rgba(255, 255, 255, 0.7);
+  text-shadow: 0 0 14px rgba(255, 255, 255, 0.85);
+}
+
+.glowing-border-bottom {
+  box-shadow: 0 6px 14px rgba(99, 102, 241, 0.85);
 }

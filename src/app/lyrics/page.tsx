@@ -1,12 +1,13 @@
 import Link from 'next/link';
+import Container from '@/components/Container';
 
 export default function LyricsPage() {
   const songs = [{ href: '/song', label: 'Alien Man' }];
 
   return (
-    <>
+    <Container>
       <div className="text-center mb-8">
-        <h1 className="text-5xl tracking-wide font-extrabold text-white glowing-text border-b-2 border-indigo-500 pb-2 inline-block">
+        <h1 className="border-b-2 border-indigo-500 pb-2 inline-block">
           Lyrics
         </h1>
       </div>
@@ -23,6 +24,6 @@ export default function LyricsPage() {
           </li>
         ))}
       </ul>
-    </>
+    </Container>
   );
 }

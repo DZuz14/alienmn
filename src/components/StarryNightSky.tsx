@@ -55,14 +55,22 @@ export default function StarryNightSky({
   return (
     <div className="bg-gradient-to-br from-violet-600 via-indigo-900 to-gray-900 h-screen w-screen flex fixed inset-0">
       {/* Static stars */}
-      <Stars />
+      <Stars
+        isClient={isClient}
+        width={dimensions.width}
+        height={dimensions.height}
+      />
 
       {/* Floating bubbles */}
-      {/* <Bubbles isClient={isClient} width={dimensions.width} /> */}
+      <Bubbles
+        isClient={isClient}
+        width={dimensions.width}
+        height={dimensions.height}
+      />
 
       {/* Content */}
       <div className="z-10 relative w-full flex justify-center overflow-y-auto">
-        <div className="max-w-7xl w-full px-4 py-8">{children}</div>
+        <div className="max-w-7xl w-full px-4 pt-40">{children}</div>
       </div>
     </div>
   );
