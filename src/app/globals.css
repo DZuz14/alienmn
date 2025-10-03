@@ -17,6 +17,15 @@
   }
 }
 
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
 body {
   color: var(--foreground);
   background: var(--background);
@@ -67,4 +76,12 @@ body {
   100% {
     transform: translate(8px, -20px);
   }
+}
+
+/**
+Custom CSS for the project
+*/
+
+.glowing-text {
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.7);
 }

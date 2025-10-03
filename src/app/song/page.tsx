@@ -31,12 +31,14 @@ export default function LyricsPage() {
 
     const rect = event.currentTarget.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
+
+    // Position tooltip above the clicked element
     setActiveAnnotation({
       text: annotation,
       position: {
-        top: rect.top + window.scrollY - 8,
-        left: centerX + window.scrollX,
-        transform: 'translate(-50%, -100%)',
+        top: rect.top - 8, // Position above the element with small gap
+        left: centerX,
+        transform: 'translate(-50%, -100%)', // Center horizontally and position above
       },
       sourceElement: event.currentTarget,
     });
@@ -158,7 +160,7 @@ function AnnotationTooltip({
 }) {
   return (
     <div
-      className="fixed bg-gray-800/90 backdrop-blur-sm text-white p-4 rounded-lg text-base max-w-sm shadow-lg transition-opacity duration-200 tooltip"
+      className="fixed bg-gray-800/90 backdrop-blur-sm text-white p-4 rounded-lg text-base max-w-sm shadow-lg transition-opacity duration-200 tooltip z-50"
       style={{
         top: annotation.position.top,
         left: annotation.position.left,
