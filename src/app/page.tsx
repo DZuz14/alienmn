@@ -1,3 +1,5 @@
+'use client';
+
 import { GlowingBorderBottom } from '@/components';
 
 export default function Home() {
