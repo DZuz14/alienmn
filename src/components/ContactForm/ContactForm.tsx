@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import {
   AlertCircle,
   CheckCircle,
@@ -8,8 +9,7 @@ import {
   User,
   X,
 } from 'lucide-react';
-import { useState } from 'react';
-import StarryNightSky from './StarryNightSky';
+import { StarryNightSky } from '@/components';
 
 interface FormData {
   name: string;
@@ -155,7 +155,7 @@ export default function ContactForm() {
                 <AlertCircle size={20} className="text-yellow-600" />
               )}
             </div>
-            <p className="flex-1 text-sm font-medium">{notification.message}</p>
+            <p className="flex-1">{notification.message}</p>
             <button
               onClick={closeNotification}
               className="flex-shrink-0 ml-2 hover:opacity-70 transition-opacity"
@@ -171,7 +171,7 @@ export default function ContactForm() {
             <div className="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-full mb-4">
               <Mail className="w-8 h-8 text-white" />
             </div>
-            <h2 className="text-3xl font-bold text-white mb-2">Get in Touch</h2>
+            <h2 className="text-3xl mb-2">Get in Touch</h2>
             <p className="text-white/80">
               Send us a message and we'll respond as soon as possible.
             </p>
@@ -180,10 +180,7 @@ export default function ContactForm() {
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Name Field */}
             <div>
-              <label
-                htmlFor="name"
-                className="block text-sm font-medium text-white mb-2"
-              >
+              <label htmlFor="name" className="block mb-2">
                 <User className="inline w-4 h-4 mr-2" />
                 Name
               </label>
@@ -199,18 +196,13 @@ export default function ContactForm() {
                 placeholder="Your full name"
               />
               {errors.name && (
-                <p className="text-red-300 text-sm mt-1 fade-in">
-                  {errors.name}
-                </p>
+                <p className="text-red-300 mt-1 fade-in">{errors.name}</p>
               )}
             </div>
 
             {/* Email Field */}
             <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-white mb-2"
-              >
+              <label htmlFor="email" className="block mb-2">
                 <Mail className="inline w-4 h-4 mr-2" />
                 Email
               </label>
@@ -226,18 +218,13 @@ export default function ContactForm() {
                 placeholder="your@email.com"
               />
               {errors.email && (
-                <p className="text-red-300 text-sm mt-1 fade-in">
-                  {errors.email}
-                </p>
+                <p className="text-red-300 mt-1 fade-in">{errors.email}</p>
               )}
             </div>
 
             {/* Message Field */}
             <div>
-              <label
-                htmlFor="message"
-                className="block text-sm font-medium text-white mb-2"
-              >
+              <label htmlFor="message" className="block mb-2">
                 <MessageSquare className="inline w-4 h-4 mr-2" />
                 Message
               </label>
@@ -253,9 +240,7 @@ export default function ContactForm() {
                 placeholder="Tell us about your project or question..."
               />
               {errors.message && (
-                <p className="text-red-300 text-sm mt-1 fade-in">
-                  {errors.message}
-                </p>
+                <p className="text-red-300 mt-1 fade-in">{errors.message}</p>
               )}
             </div>
 
@@ -263,7 +248,7 @@ export default function ContactForm() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 disabled:from-gray-500 disabled:to-gray-600 disabled:cursor-not-allowed text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 shadow-lg"
+              className="w-full bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 disabled:from-gray-500 disabled:to-gray-600 disabled:cursor-not-allowed text-white py-3 px-6 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 shadow-lg"
             >
               {isLoading ? (
                 <>

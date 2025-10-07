@@ -1,14 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Stars from './Stars';
-import Bubbles from './Bubbles';
+import { Stars, Bubbles } from '@/components';
 
-/**
- * Creates a starry night sky background with static stars and floating bubbles
- * @param children - The children to wrap
- * @returns The wrapped children with a starry night sky background
- */
 export default function StarryNightSky({
   children,
 }: {
@@ -70,7 +64,7 @@ export default function StarryNightSky({
 
       {/* Content */}
       <div className="z-10 relative w-full flex justify-center overflow-y-auto">
-        <div className="max-w-7xl w-full px-4 pt-40">{children}</div>
+        <div className="max-w-7xl w-full px-4">{children}</div>
       </div>
     </div>
   );

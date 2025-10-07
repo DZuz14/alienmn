@@ -1,7 +1,6 @@
 'use client';
-import StarryNightSky from '@/components/StarryNightSky';
+import { StarryNightSky, NavBar, BackToTop } from '@/components';
 import { Inter, Roboto_Mono } from 'next/font/google';
-import NavBar from '../components/NavBar';
 import './globals.css';
 
 const inter = Inter({
@@ -28,6 +27,7 @@ export default function RootLayout({
           <NavBar />
           {children}
         </StarryNightSky>
+        <BackToTop />
       </body>
     </html>
   );
